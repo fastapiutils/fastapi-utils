@@ -3,8 +3,8 @@
 </p>
 <p align="center">
 <a href="https://github.com/dmontagu/fastapi-utils" target="_blank">
-	<img src="https://img.shields.io/github/last-commit/dmontagu/fastapi-utils.svg">
-	<img src="https://github.com/dmontagu/fastapi-utils/workflows/build/badge.svg" alt="Build CI">
+ <img src="https://img.shields.io/github/last-commit/dmontagu/fastapi-utils.svg">
+ <img src="https://github.com/dmontagu/fastapi-utils/workflows/build/badge.svg" alt="Build CI">
 </a>
 <a href="https://codecov.io/gh/dmontagu/fastapi-utils" target="_blank">
     <img src="https://codecov.io/gh/dmontagu/fastapi-utils/branch/master/graph/badge.svg" alt="Coverage">
@@ -26,7 +26,7 @@
 
 ---
 
-<a href="https://fastapi.tiangolo.com">FastAPI</a> is a modern, fast web framework for building APIs with Python 3.7+.
+<a href="https://fastapi.tiangolo.com">FastAPI</a> is a modern, fast web framework for building APIs with Python 3.8+.
 
 But if you're here, you probably already knew that!
 
@@ -57,7 +57,7 @@ See the [docs](https://fastapi-utils.davidmontague.xyz/) for more details and ex
 
 ## Requirements
 
-This package is intended for use with any recent version of FastAPI (depending on `pydantic>=1.0`), and Python 3.7+.
+This package is intended for use with any recent version of FastAPI (depending on `pydantic>=1.0`), and Python 3.8+.
 
 ## Installation
 
