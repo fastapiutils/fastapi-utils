@@ -40,7 +40,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 
 fastapi = ">=0.89,<1.0"
 pydantic = ">1.0, <3.0"
