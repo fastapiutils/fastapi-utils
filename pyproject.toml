@@ -65,7 +65,7 @@ types-mock = { version = "*", python = "<3.8" }
 
 
 # Static
-ruff = "*"
+ruff = ">0.3"
 black = { version = "*", allow-prereleases = true }
 mypy = "*"
 sqlalchemy-stubs = "*"
@@ -103,6 +103,8 @@ exclude = '''
 
 [tool.ruff]
 line-length = 120
+
+[tool.ruff.lint]
 extend-select = ['RUF100', 'C90', 'I']
 isort = { known-first-party = ['FastApi-RESTful', 'tests'] }
 
