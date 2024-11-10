@@ -58,8 +58,8 @@ httpx = "*"  # TestClient
 pytest = "^7.0"
 pytest-cov = "*"
 pytest-asyncio = [
-  {version = "^0.21.1", python = "<3.9"},
-  {version = "*", python = ">=3.9"}
+  {version = "^0.21.1", python = ">=3.8,<3.10"},
+  {version = "*", python = ">=3.10"}
 ]
 coverage = "*"
 codecov = "^2.1.13"
