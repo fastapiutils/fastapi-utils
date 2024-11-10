@@ -1,4 +1,4 @@
-name: build-pull-request
+name: tests-pull-request
 
 on:
   pull_request:
