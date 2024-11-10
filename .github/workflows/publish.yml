@@ -35,8 +35,19 @@ jobs:
       - name: Build distribution
         run: poetry build
 
+      - name: Bump to version
+        run: poetry run make version version=${{ github.ref_name }}
+
+      - name: Commit new version
+        run: |
+          git config --global user.name 'BumpVersion[CI]'
+          git config --global user.email 'bumpversion@users.noreply.github.com'
+          git commit -am "Update version to ${{ github.ref_name }}"
+          git push
+
       - name: Publish distribution to PyPI
-        run: poetry publish
+        run: |
+          echo "will publish ${poetry version}"
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
 
