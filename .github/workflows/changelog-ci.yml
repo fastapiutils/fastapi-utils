@@ -1,5 +1,8 @@
 name: Changelog CI
 
+permissions:
+    contents: write
+
 on:
   pull_request:
     types: [ opened ]
