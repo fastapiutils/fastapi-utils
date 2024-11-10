@@ -5,9 +5,9 @@ description = "Reusable utilities for FastAPI"
 license = "MIT"
 authors = ["Yuval Levi <yuvall9313@gmail.com>", "David Montague <davwmont@gmail.com>"]
 readme = "README.md"
-homepage = "https://fastapi-utils.davidmontague.xyz"
+homepage = "https://fastapiutils.github.io/fastapi-utils/"
 repository = "https://github.com/dmontagu/fastapi-utils"
-documentation = "https://fastapi-utils.davidmontague.xyz"
+documentation = "https://fastapiutils.github.io/fastapi-utils/"
 keywords = ["fastapi", "OOP", "RESTful"]
 classifiers = [
     "Intended Audience :: Information Technology",
