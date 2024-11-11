@@ -1,4 +1,6 @@
+import functools
 import inspect
+import sys
 from typing import (
     Any,
     Callable,
@@ -15,6 +17,9 @@ import pydantic
 from fastapi import APIRouter, Depends
 from fastapi.routing import APIRoute
 from starlette.routing import Route, WebSocketRoute
+
+if sys.version_info >= (3, 9, 0):
+    get_type_hints = functools.partial(get_type_hints, include_extras=True)
 
 PYDANTIC_VERSION = pydantic.VERSION
 if PYDANTIC_VERSION[0] == "2":
