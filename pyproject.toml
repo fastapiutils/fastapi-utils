@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "fastapi-utils"
-version = "0.6.0"
+version = "0.8.0"
 description = "Reusable utilities for FastAPI"
 license = "MIT"
 authors = ["Yuval Levi <yuvall9313@gmail.com>", "David Montague <davwmont@gmail.com>"]
 readme = "README.md"
-homepage = "https://fastapi-utils.davidmontague.xyz"
+homepage = "https://fastapiutils.github.io/fastapi-utils/"
 repository = "https://github.com/dmontagu/fastapi-utils"
-documentation = "https://fastapi-utils.davidmontague.xyz"
+documentation = "https://fastapiutils.github.io/fastapi-utils/"
 keywords = ["fastapi", "OOP", "RESTful"]
 classifiers = [
     "Intended Audience :: Information Technology",
@@ -28,7 +28,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -40,16 +39,16 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 
 fastapi = ">=0.89,<1.0"
 pydantic = ">1.0, <3.0"
 sqlalchemy =  { version = ">=1.4,<3.0", optional = true }
-psutil = "^5"
+psutil = ">=5,<7"
 pydantic-settings = { version= "^2.0.1", optional = true }
 typing-inspect = { version = "^0.9.0", optional = true}
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 # Starlette features
 aiofiles = "*"  # Serving static files
 httpx = "*"  # TestClient
@@ -57,19 +56,13 @@ httpx = "*"  # TestClient
 # Testing
 pytest = "^7.0"
 pytest-cov = "*"
-pytest-asyncio = "*"
+pytest-asyncio = [
+  {version = "^0.21.1", python = ">=3.8,<3.10"},
+  {version = "*", python = ">=3.10"}
+]
 coverage = "*"
 codecov = "^2.1.13"
-mock = { version = "*", python = "<3.8" }
-types-mock = { version = "*", python = "<3.8" }
-
-
-# Static
-ruff = "*"
-black = { version = "*", allow-prereleases = true }
-mypy = "*"
-sqlalchemy-stubs = "*"
-types-setuptools = "*"  # for pkg_resources import
+pytest-timeout = "^2.3.1"
 
 # Documentation
 mkdocs = "*"
@@ -77,12 +70,16 @@ mkdocs-material = "*"
 markdown-include = "*"
 autoflake = "^1.4"
 
+# Static
+ruff = ">0.3"
+black = { version = "*", allow-prereleases = true }
+mypy = "*"
+sqlalchemy-stubs = "*"
+types-setuptools = "*"  # for pkg_resources import
+
 [tool.poetry.extras]
 all = ["sqlalchemy", "pydantic-settings", "typing-inspect"]
 session = ["sqlalchemy"]
-
-[tool.poetry.group.dev.dependencies]
-codecov = "^2.1.13"
 
 [tool.black]
 line-length = 120
@@ -102,6 +99,8 @@ exclude = '''
 
 [tool.ruff]
 line-length = 120
+
+[tool.ruff.lint]
 extend-select = ['RUF100', 'C90', 'I']
 isort = { known-first-party = ['FastApi-RESTful', 'tests'] }
 
