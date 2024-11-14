@@ -6,6 +6,8 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "cSpell.words": [
-        "fastapi"
+        "fastapi",
+        "pydantic",
+        "starlette"
     ]
 }
