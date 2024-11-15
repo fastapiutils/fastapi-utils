@@ -24,11 +24,11 @@ test:
 format:
 	black $(all_src)
 	black -l 82 $(docs_src)
-	ruff --fix $(all_src)
+	ruff check --fix $(all_src)
 
 .PHONY: lint
 lint:
-	ruff $(all_src)
+	ruff check $(all_src)
 	black --check --diff $(all_src)
 	black -l 82 $(docs_src) --check --diff
 
@@ -47,11 +47,10 @@ testcov:
 	fi
 
 .PHONY: ci-v1  ## Run all CI validation steps without making any changes to code in pydantic v1
-
 ci-v1: install-v1 lint test
 
 
-.PHONY: ci-v1  ## Run all CI validation steps without making any changes to code in pydantic v2
+.PHONY: ci-v2  ## Run all CI validation steps without making any changes to code in pydantic v2
 ci-v2: install-v2 lint mypy test
 
 
@@ -108,7 +107,7 @@ docs-build:
 
 .PHONY: docs-format  ## Format the python code that is part of the docs
 docs-format:
-	ruff $(docs_src)
+	ruff check $(docs_src)
 	autoflake -r --remove-all-unused-imports --ignore-init-module-imports $(docs_src) -i
 	black -l 82 $(docs_src)
 

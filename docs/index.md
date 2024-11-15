@@ -3,8 +3,8 @@
 </p>
 <p align="center">
 <a href="https://github.com/dmontagu/fastapi-utils" target="_blank">
-	<img src="https://img.shields.io/github/last-commit/dmontagu/fastapi-utils.svg">
-	<img src="https://github.com/dmontagu/fastapi-utils/workflows/build/badge.svg" alt="Build CI">
+ <img src="https://img.shields.io/github/last-commit/dmontagu/fastapi-utils.svg">
+ <img src="https://github.com/dmontagu/fastapi-utils/workflows/build/badge.svg" alt="Build CI">
 </a>
 <a href="https://codecov.io/gh/dmontagu/fastapi-utils" target="_blank">
     <img src="https://codecov.io/gh/dmontagu/fastapi-utils/branch/master/graph/badge.svg" alt="Coverage">
@@ -20,13 +20,13 @@
 </p>
 
 ---
-**Documentation**: <a href="https://fastapi-utils.davidmontague.xyz" target="_blank">https://fastapi-utils.davidmontague.xyz</a>
+**Documentation**: <a href="https://fastapiutils.github.io/fastapi-utils/" target="_blank">https://fastapiutils.github.io/fastapi-utils/</a>
 
 **Source Code**: <a href="https://github.com/dmontagu/fastapi-utils" target="_blank">https://github.com/dmontagu/fastapi-utils</a>
 
 ---
 
-<a href="https://fastapi.tiangolo.com">FastAPI</a> is a modern, fast web framework for building APIs with Python 3.7+.
+<a href="https://fastapi.tiangolo.com">FastAPI</a> is a modern, fast web framework for building APIs with Python 3.8+.
 
 But if you're here, you probably already knew that!
 
@@ -53,20 +53,20 @@ It also adds a variety of more basic utilities that are useful across a wide var
 * **CamelCase Conversions**: Convenience functions for converting strings from `snake_case` to `camelCase` or `PascalCase` and back
 * **GUID Type**: The provided GUID type makes it easy to use UUIDs as the primary keys for your database tables
 
-See the [docs](https://https://fastapi-utils.davidmontague.xyz/) for more details and examples.
+See the [docs](https://https://fastapiutils.github.io/fastapi-utils//) for more details and examples.
 
 ## Requirements
 
-This package is intended for use with any recent version of FastAPI (depending on `pydantic>=1.0`), and Python 3.7+.
+This package is intended for use with any recent version of FastAPI (depending on `pydantic>=1.0`), and Python 3.8+.
 
 ## Installation
 
 ```bash
-pip install fastapi-restful  # For basic slim package :)
+pip install fastapi-utils  # For basic slim package :)
 
-pip install fastapi-restful[session]  # To add sqlalchemy session maker
+pip install fastapi-utils[session]  # To add sqlalchemy session maker
 
-pip install fastapi-restful[all]  # For all the packages
+pip install fastapi-utils[all]  # For all the packages
 ```
 
 ## License

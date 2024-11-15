@@ -1,9 +1,13 @@
 {
-  "name": "fastapi-37",
-  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "name": "fastapi-38",
+	"image": "mcr.microsoft.com/devcontainers/python:1-3.8-bookworm",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": { "version": "latest" }
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "latest"
+    }
   },
   "postCreateCommand": "pipx install poetry && poetry install",
-  "forwardPorts": [2222]
+  "forwardPorts": [
+    2222
+  ]
 }
