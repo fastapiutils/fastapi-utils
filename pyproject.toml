@@ -1,14 +1,24 @@
-[tool.poetry]
+[project]
+authors = [
+    {name = "Yuval Levi", email = "yuvall9313@gmail.com"},
+    {name = "David Montague", email = "davwmont@gmail.com"},
+]
+license = {text = "MIT"}
+requires-python = "<4.0,>=3.8"
+dependencies = [
+    "fastapi<1.0,>=0.89",
+    "pydantic<3.0,>1.0",
+    "psutil<6,>=5",
+]
 name = "fastapi-utils"
 version = "0.8.0"
 description = "Reusable utilities for FastAPI"
-license = "MIT"
-authors = ["Yuval Levi <yuvall9313@gmail.com>", "David Montague <davwmont@gmail.com>"]
 readme = "README.md"
-homepage = "https://fastapiutils.github.io/fastapi-utils/"
-repository = "https://github.com/dmontagu/fastapi-utils"
-documentation = "https://fastapiutils.github.io/fastapi-utils/"
-keywords = ["fastapi", "OOP", "RESTful"]
+keywords = [
+    "fastapi",
+    "OOP",
+    "RESTful",
+]
 classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: System Administrators",
@@ -35,51 +45,54 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
     "Topic :: Internet :: WWW/HTTP",
-    "Topic :: Utilities"
+    "Topic :: Utilities",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.8"
+[project.urls]
+homepage = "https://fastapiutils.github.io/fastapi-utils/"
+repository = "https://github.com/dmontagu/fastapi-utils"
+documentation = "https://fastapiutils.github.io/fastapi-utils/"
 
-fastapi = ">=0.89,<1.0"
-pydantic = ">1.0, <3.0"
-sqlalchemy =  { version = ">=1.4,<3.0", optional = true }
-psutil = "^5"
-pydantic-settings = { version= "^2.0.1", optional = true }
-typing-inspect = { version = "^0.9.0", optional = true}
+[dependency-groups]
+dev = [
+    # Starlette features
+    "aiofiles",  # Serving static files
+    "httpx",     # Test client
+    
+    # Testing
+    "pytest<8.0,>=7.0",
+    "pytest-cov",
+    "pytest-asyncio<1.0.0,>=0.21.1; python_version < \"3.10\" and python_version >= \"3.8\"",
+    "pytest-asyncio; python_version >= \"3.10\"",
+    "coverage",
+    "codecov<3.0.0,>=2.1.13",
+    "pytest-timeout<3.0.0,>=2.3.1",
+    "sqlalchemy<3.0,>=1.4",
 
-[tool.poetry.group.dev.dependencies]
-# Starlette features
-aiofiles = "*"  # Serving static files
-httpx = "*"  # TestClient
-
-# Testing
-pytest = "^7.0"
-pytest-cov = "*"
-pytest-asyncio = [
-  {version = "^0.21.1", python = ">=3.8,<3.10"},
-  {version = "*", python = ">=3.10"}
+    # Static
+    "autoflake<2.0,>=1.4",
+    "ruff>0.3",
+    "black",
+    "mypy",
+    "sqlalchemy-stubs",
 ]
-coverage = "*"
-codecov = "^2.1.13"
-pytest-timeout = "^2.3.1"
+docs = [
+    # Docs
+    "mkdocs",
+    "mkdocs-material",
+    "markdown-include",
+]
 
-# Documentation
-mkdocs = "*"
-mkdocs-material = "*"
-markdown-include = "*"
-autoflake = "^1.4"
+[project.optional-dependencies]
+all = [
+    "sqlalchemy<3.0,>=1.4",
+    "pydantic-settings<3.0.0,>=2.0.1",
+    "typing-inspect<1.0.0,>=0.9.0",
+]
 
-# Static
-ruff = ">0.3"
-black = { version = "*", allow-prereleases = true }
-mypy = "*"
-sqlalchemy-stubs = "*"
-types-setuptools = "*"  # for pkg_resources import
-
-[tool.poetry.extras]
-all = ["sqlalchemy", "pydantic-settings", "typing-inspect"]
-session = ["sqlalchemy"]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.black]
 line-length = 120
@@ -104,7 +117,6 @@ line-length = 120
 extend-select = ['RUF100', 'C90', 'I']
 isort = { known-first-party = ['FastApi-RESTful', 'tests'] }
 
-
 [tool.coverage.run]
 source = ["fastapi_utils"]
 branch = true
@@ -124,7 +136,6 @@ exclude_lines = [
 testpaths = "tests"
 filterwarnings = "ignore:.*The explicit passing of coroutine objects to asyncio.wait()*:DeprecationWarning"
 
-
 [tool.mypy]
 plugins = "pydantic.mypy,sqlmypy"
 
@@ -136,10 +147,3 @@ disallow_any_generics = true
 check_untyped_defs = true
 ignore_missing_imports = true
 disallow_untyped_defs = true
-
-[tool.poetry-version-plugin]
-source = "init"
-
-[build-system]
-requires = ["poetry_core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

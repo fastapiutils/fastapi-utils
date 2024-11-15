@@ -6,9 +6,9 @@ tests_src = tests
 docs_src = docs/src
 all_src = $(pkg_src) $(tests_src)
 
-mypy_base = mypy --show-error-codes
+mypy_base = uv run mypy --show-error-codes
 mypy = $(mypy_base) $(all_src)
-test = pytest --cov=$(pkg_src)
+test = uv run pytest --cov=$(pkg_src)
 
 .PHONY: all  ## Run the most common rules used during development
 all: static test
@@ -22,15 +22,15 @@ test:
 
 .PHONY: format  ## Auto-format the source code (ruff, black)
 format:
-	black $(all_src)
-	black -l 82 $(docs_src)
-	ruff check --fix $(all_src)
+	uv run black $(all_src)
+	uv run black -l 82 $(docs_src)
+	uv run ruff check --fix $(all_src)
 
 .PHONY: lint
 lint:
-	ruff check $(all_src)
-	black --check --diff $(all_src)
-	black -l 82 $(docs_src) --check --diff
+	uv run ruff check $(all_src)
+	uv run black --check --diff $(all_src)
+	uv run black -l 82 $(docs_src) --check --diff
 
 .PHONY: mypy  ## Run mypy over the application source and tests
 mypy:
@@ -55,14 +55,14 @@ ci-v2: install-v2 lint mypy test
 
 
 install-v1:
-	poetry run python -m pip uninstall "pydantic-settings" -y
-	poetry run python -m pip uninstall "typing-inspect" -y
-	poetry run python -m pip install "pydantic>=1.10,<2.0.0"
+	uv pip uninstall "pydantic-settings"
+	uv pip uninstall "typing-inspect" 
+	uv pip install "pydantic>=1.10,<2.0.0"
 
 install-v2:
-	poetry run python -m pip install "pydantic>=2.0.0,<3.0.0"
-	poetry run python -m pip install "pydantic-settings>=2.0.0,<3.0.0"
-	poetry run python -m pip install "typing-inspect>=0.9.0,<1.0.0"
+	uv pip install "pydantic>=2.0.0,<3.0.0"
+	uv pip install "pydantic-settings>=2.0.0,<3.0.0"
+	uv pip install "typing-inspect>=0.9.0,<1.0.0"
 
 
 .PHONY: clean  ## Remove temporary and cache files/directories
@@ -92,32 +92,27 @@ lock:
 develop:
 	./scripts/develop.sh
 
-.PHONY: version  ## Bump the version in both pyproject.toml and __init__.py (usage: `make version version=minor`)
-version: poetryversion
-	$(eval NEW_VERS := $(shell cat pyproject.toml | grep "^version = \"*\"" | cut -d'"' -f2))
-	@sed -i "s/__version__ = .*/__version__ = \"$(NEW_VERS)\"/g" $(pkg_src)/__init__.py
-
 .PHONY: docs-build  ## Generate the docs and update README.md
 docs-build:
 	cp ./README.md ./docs/index.md
 	cp ./CONTRIBUTING.md ./docs/contributing.md
 	cp ./CHANGELOG.md ./docs/release-notes.md
-	pip install mkdocs mkdocs-material markdown-include
-	python -m mkdocs build
+	uv sync --group docs
+	uv run mkdocs build
 
 .PHONY: docs-format  ## Format the python code that is part of the docs
 docs-format:
-	ruff check $(docs_src)
-	autoflake -r --remove-all-unused-imports --ignore-init-module-imports $(docs_src) -i
-	black -l 82 $(docs_src)
+	uv run ruff check $(docs_src)
+	uv run autoflake -r --remove-all-unused-imports --ignore-init-module-imports $(docs_src) -i
+	uv run black -l 82 $(docs_src)
 
 .PHONY: docs-live  ## Serve the docs with live reload as you make changes
 docs-live:
-	mkdocs serve --dev-addr 0.0.0.0:8008
+	uv run mkdocs serve --dev-addr 0.0.0.0:8008
 
-.PHONY: poetryversion
-poetryversion:
-	poetry version $(version)
+.PHONY: version  ## Bump the version in pyproject.toml (usage: make version version=0.9.0)
+version:
+	uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version $(version)
 
 .PHONY: help  ## Display this message
 help:
