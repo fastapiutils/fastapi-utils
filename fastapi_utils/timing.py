@@ -13,10 +13,10 @@ from __future__ import annotations
 import os
 import time
 from collections.abc import Callable
-from typing import Any
+from typing import Any, cast
 
 import psutil
-from fastapi import FastAPI
+from fastapi import FastAPI, routing
 from starlette.middleware.base import RequestResponseEndpoint
 from starlette.requests import Request
 from starlette.responses import Response
@@ -24,6 +24,7 @@ from starlette.routing import Match, Mount
 from starlette.types import Scope
 
 TIMER_ATTRIBUTE = "__fastapi_utils_timer__"
+_INCLUDED_ROUTER_TYPE = getattr(routing, "_IncludedRouter", ())
 
 
 def add_timing_middleware(
@@ -180,6 +181,13 @@ class _MetricNamer:
         for r in self.app.router.routes:
             if r.matches(scope)[0] == Match.FULL:
                 route = r
+                break
+        # FastAPI 0.137+ reports matches on included routers without returning
+        # their endpoint. Resolve the leaf using FastAPI's prefixed matching.
+        while isinstance(route, _INCLUDED_ROUTER_TYPE):
+            match, _, route, _ = cast(Any, route)._match(scope)
+            if match != Match.FULL:
+                route = None
                 break
         if hasattr(route, "endpoint") and hasattr(route, "name"):
             name = f"{self.prefix}{route.endpoint.__module__}.{route.name}"  # type: ignore

@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import pytest
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from starlette.requests import Request
 from starlette.staticfiles import StaticFiles
 from starlette.testclient import TestClient
@@ -90,6 +90,29 @@ def test_intermediate(capsys: CaptureFixture[str]) -> None:
     assert outs[0].endswith("test_timing.get_with_intermediate_timing (hello)")
     assert outs[1].startswith("TIMING:")
     assert outs[1].endswith("test_timing.get_with_intermediate_timing")
+
+
+def test_timing_included_router() -> None:
+    messages: list[str] = []
+    app = FastAPI()
+    add_timing_middleware(app, record=messages.append, prefix="api")
+    parent = APIRouter()
+    nested = APIRouter()
+
+    @nested.get("/{item_id:int}", name="read_item")
+    def get_item(item_id: int, request: Request) -> int:
+        record_timing(request, note="lookup")
+        return item_id
+
+    parent.include_router(nested, prefix="/items")
+    app.include_router(parent, prefix="/v1")
+
+    response = TestClient(app).get("/v1/items/42")
+
+    assert response.status_code == 200
+    assert response.json() == 42
+    metric_name = f"api.{__name__}.read_item"
+    assert [message.rsplit(" | ", 1)[-1] for message in messages] == [f"{metric_name} (lookup)", metric_name]
 
 
 app3 = FastAPI()
